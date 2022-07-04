@@ -263,32 +263,66 @@ window.onload = function () {
   function clear() {
     setTimeout(() => {
       document.getElementById("result").innerText = "";
-      document.getElementById("finalResult").innerText = "";
-      document.getElementById("finalResultSecond").innerText = "";
-      document.getElementById("finalResultDraw").innerText = "";
       document.getElementById("r").src = "./r.png";
       document.getElementById("p").src = "./p.png";
       document.getElementById("s").src = "./s.png";
-      document.getElementById("my-choice").src = "./r.png";
 
       document.addEventListener("click", function changeImage(e) {
         let imgId = e.target;
-        if (imgId == r || imgId == r1 || imgId == r2 || imgId == r3) {
+        if (imgId == r) {
           imgId.src = "/rock.png";
           document.getElementById("my-choice").src = "./r.png";
-        } else if (imgId == p || imgId == p1 || imgId == p2 || imgId == p3) {
+        } else if (imgId == p) {
           imgId.src = "/cloth.png";
           document.getElementById("my-choice").src = "./p.png";
-        } else if (imgId == s || imgId == s1 || imgId == s2 || imgId == s3) {
+        } else if (imgId == s) {
           imgId.src = "/shears.png";
           document.getElementById("my-choice").src = "./s.png";
-        } else if (imgId == a || imgId == a1 || imgId == a2 || imgId == a3) {
+        } else if (imgId == a) {
           document.getElementById("my-choice").src = "./a.png";
-        } else if (imgId == d || imgId == d1 || imgId == d2 || imgId == d3) {
+        } else if (imgId == d) {
           document.getElementById("my-choice").src = "./d.png";
         }
+        opponent = choices[Math.floor(Math.random() * 3)];
+        document.getElementById("choice").src = opponent + ".png";
+
+        // 判斷誰勝利
+        if (imgId.id == opponent) {
+          document.getElementById("result").innerText = "平手 再來再來";
+        }
+        // 出石頭
+        else {
+          if (imgId.id == "r") {
+            if (opponent == "s") {
+              document.getElementById("result").innerText = "勝利 妳好棒棒";
+            } else if (opponent == "p") {
+              document.getElementById("result").innerText = "失敗 底子不行";
+            }
+          }
+          // 出剪刀
+          else if (imgId.id == "s") {
+            if (opponent == "p") {
+              document.getElementById("result").innerText = "勝利 妳好棒棒";
+            } else if (opponent == "r") {
+              document.getElementById("result").innerText = "失敗 底子不行";
+            }
+          }
+          // 出布
+          else if (imgId.id == "p") {
+            if (opponent == "r") {
+              document.getElementById("result").innerText = "勝利 妳好棒棒";
+            } else if (opponent == "s") {
+              document.getElementById("result").innerText = "失敗 底子不行";
+            }
+          }
+          // 出進攻 || 防守
+          else if (imgId.id == "a") {
+            document.getElementById("result").innerText = "失敗 按到進攻";
+          } else if (imgId.id == "d") {
+            document.getElementById("result").innerText = "失敗 按到防守";
+          }
+        }
       });
-      document.removeEventListener("click", changeImage);
     }, 6000);
   }
 };
